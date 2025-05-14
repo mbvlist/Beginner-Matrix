@@ -1,6 +1,5 @@
-#include "Matrix.h"
-
-#include <iostream>
+import Matrix;
+import std;
 
 Matrix<int> test_function()
 {

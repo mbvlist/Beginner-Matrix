@@ -1,13 +1,11 @@
 ﻿// Matrix.h : Include file for standard system include files,
 // or project specific include files.
+module;
+export module Matrix;
 
-#pragma once
+import std;
 
-#include <iomanip>
-#include <iostream>
-#include <utility>
-
-template<class T>
+export template<class T>
 class Matrix
 {
 public:
