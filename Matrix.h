@@ -9,12 +9,12 @@ class Matrix
 {
 public:
     Matrix(size_t rows, size_t columns);
-    Matrix(const Matrix& m);
-    Matrix(Matrix&& m);
+    Matrix(const Matrix& m) noexcept;
+    Matrix(Matrix&& m) noexcept;
     ~Matrix();
 
     Matrix& operator=(const Matrix& m);
-    Matrix& operator=(Matrix&& m);
+    Matrix& operator=(Matrix&& m) noexcept;
 
     Matrix operator+(const Matrix& m) const;
     Matrix operator*(double d) const;
@@ -24,6 +24,8 @@ public:
 
     double& operator()(size_t row, size_t col) { return m_data[pos(row, col)]; }
     const double& operator()(size_t row, size_t col) const { return m_data[pos(row, col)]; }
+
+    double max() const;
 
 private:
     size_t pos(size_t row, size_t column) const { return row * m_columns + column; }

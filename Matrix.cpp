@@ -1,6 +1,7 @@
 ﻿#include "matrix.h"
 
 #include <iostream>
+#include <iomanip>
 
 Matrix::Matrix(size_t rows, size_t columns)
     : m_data(new double[rows * columns]),
@@ -13,7 +14,7 @@ Matrix::Matrix(size_t rows, size_t columns)
     }
 }
 
-Matrix::Matrix(const Matrix& m)
+Matrix::Matrix(const Matrix& m) noexcept
     : m_data(new double[m.m_rows * m.m_columns]),
     m_rows(m.m_rows),
     m_columns(m.m_columns)
@@ -24,7 +25,7 @@ Matrix::Matrix(const Matrix& m)
     }
 }
 
-Matrix::Matrix(Matrix&& m)
+Matrix::Matrix(Matrix&& m) noexcept
     : m_data(m.m_data),
     m_rows(m.m_rows),
     m_columns(m.m_columns)
@@ -59,7 +60,7 @@ Matrix& Matrix::operator=(const Matrix& m)
     return *this;
 }
 
-Matrix& Matrix::operator=(Matrix&& m)
+Matrix& Matrix::operator=(Matrix&& m) noexcept
 {
     std::swap(m_data, m.m_data);
     std::swap(m_rows, m.m_rows);
@@ -103,15 +104,31 @@ Matrix operator*(double d, const Matrix& m)
 
 std::ostream& operator<<(std::ostream& os, const Matrix& m)
 {
+    // TODO determine sane length based on string representation of all values
+    size_t length = 4;
     for (size_t row = 0; row < m.m_rows; row++)
     {
         for (size_t col = 0; col < m.m_columns; col++)
         {
-            os << m(row, col) << ", ";
+            os << std::setw(length) << m(row, col) << ", ";
         }
 
         os << std::endl;
     }
 
     return os;
+}
+
+double Matrix::max() const
+{
+    if (m_rows == 0 || m_columns == 0)
+    {
+        throw std::exception("Matrix was created without values (no rows or no columns)");
+    }
+    double max_found = m_data[0];
+    for (size_t pos = 0; pos < m_rows * m_columns; pos++)
+    {
+        max_found = std::max(max_found, m_data[pos]);
+    }
+    return max_found;
 }
