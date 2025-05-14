@@ -12,8 +12,7 @@ endif()
 project ("Matrix")
 
 # Add source to this project's executable.
-add_executable (Matrix 
-	"Matrix.cpp" 
+add_executable (Matrix
 	"Matrix.h" 
 	"main.cpp"
 )
